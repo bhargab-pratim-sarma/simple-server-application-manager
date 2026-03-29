@@ -37,7 +37,7 @@ built on top of **Docker** + **Traefik** — deploy any app with a single `.env`
 - ✅ **Auto-discovery** — Traefik detects new Docker containers automatically
 - ✅ **Secure dashboard** behind basic auth at your own domain
 
-> **Live Server:** `31.97.233.65` &nbsp;|&nbsp; **Traefik Dashboard:** [https://tf.namani.in/dashboard/](https://tf.namani.in/dashboard/)
+> **Live Server:** `YOUR_SERVER_IP` &nbsp;|&nbsp; **Traefik Dashboard:** [https://tf.yourdomain.com/dashboard/](https://tf.yourdomain.com/dashboard/)
 
 ---
 
@@ -50,13 +50,13 @@ built on top of **Docker** + **Traefik** — deploy any app with a single `.env`
   Cloudflare (DNS)
        │
        ▼
-  Server: 31.97.233.65
+  Server: YOUR_SERVER_IP
        │
        ▼
   Port 80  ──► Traefik (auto-redirects to HTTPS)
   Port 443 ──► Traefik (checks domain name)
        │
-       ├──► tf.namani.in        →  Traefik Dashboard
+       ├──► tf.yourdomain.com        →  Traefik Dashboard
        ├──► blog.namani.in      →  Ghost Blog container
        ├──► c.aatmanova.in      →  WordPress container
        └──► anything.domain     →  Any Docker container
@@ -166,7 +166,7 @@ That's it. Your app is live with HTTPS in under a minute. ✅
 
 | Variable | Description | Example |
 |----------|-------------|---------|
-| `TRAEFIK_DOMAIN` | Domain for Traefik dashboard | `tf.namani.in` |
+| `TRAEFIK_DOMAIN` | Domain for Traefik dashboard | `tf.yourdomain.com` |
 | `ACME_EMAIL` | Email for SSL cert expiry alerts | `you@gmail.com` |
 | `DASHBOARD_AUTH` | `htpasswd`-hashed credentials | `admin:$$apr1$$...` |
 | `DOCKER_API_VERSION` | Docker Engine API version | `1.44` |
@@ -264,8 +264,8 @@ cp -r applications/blog-example applications/my-new-app
 nano applications/my-new-app/.env
 
 # 3. Upload to your server and start
-scp -r applications/my-new-app root@31.97.233.65:/opt/my-new-app
-ssh root@31.97.233.65 "cd /opt/my-new-app && docker compose up -d"
+scp -r applications/my-new-app root@YOUR_SERVER_IP:/opt/my-new-app
+ssh root@YOUR_SERVER_IP "cd /opt/my-new-app && docker compose up -d"
 ```
 
 Traefik will **automatically discover** the new container, request an SSL certificate, and start routing traffic within seconds.
@@ -280,10 +280,10 @@ Traefik will **automatically discover** the new container, request an SSL certif
 
 | Property | Value |
 |----------|-------|
-| **Server IP** | `31.97.233.65` |
-| **Traefik Dashboard** | [https://tf.namani.in/dashboard/](https://tf.namani.in/dashboard/) |
+| **Server IP** | `YOUR_SERVER_IP` |
+| **Traefik Dashboard** | [https://tf.yourdomain.com/dashboard/](https://tf.yourdomain.com/dashboard/) |
 | **SSH Key** | `.ssh/aatmanova2` |
-| **SSH Command** | `ssh -i .ssh/aatmanova2 root@31.97.233.65` |
+| **SSH Command** | `ssh -i .ssh/aatmanova2 root@YOUR_SERVER_IP` |
 | **Traefik Config Path** | `/opt/traefik/` on server |
 
 ---

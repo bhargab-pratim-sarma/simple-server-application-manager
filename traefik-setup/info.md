@@ -1,6 +1,6 @@
-IP: 31.97.233.65
-Domain: tf.namani.in
-Email: bhargabpratimsharma@gmail.com
+IP: YOUR_SERVER_IP
+Domain: tf.yourdomain.com
+Email: you@youremail.com
 SSH: /.ssh/aatmanova2
 Use root password: No
 
@@ -9,7 +9,7 @@ Requirements:
     2. Install Docker Compose
     3. Install Traefik
 
-I want Traefik Dashboard in tf.namani.in
+I want Traefik Dashboard in tf.yourdomain.com
 
 User Name: admin
 Password: admin
