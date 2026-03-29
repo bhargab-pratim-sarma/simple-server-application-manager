@@ -47,3 +47,18 @@ This repository uses a two-branch strategy to manage secrets:
 
 - Do not expose the Traefik dashboard without `DASHBOARD_AUTH`.
 - Ensure `.ssh/` and key files are **ALWAYS** ignored in `.gitignore`, even on the `private` branch.
+
+## 6. Note for AI Agents
+
+> This section is for any future AI that works on this server.
+
+- **Server**: YOUR_SERVER_IP, accessible via SSH key at `.ssh/your-key-name`
+- **Traefik Home**: /opt/server-manager/
+- **Docker Engine**: v29.x (API minimum 1.44) — **must** set `DOCKER_API_VERSION=1.44`
+- **Traefik Image**: `traefik:latest`
+- **Shared Network**: `proxy` (external, created with `docker network create proxy`)
+- **SSL**: HTTP-01 challenge via Let's Encrypt. Domain proxied by Cloudflare. 
+- **Auth**: Dashboard uses Basic Auth (htpasswd). Hash stored in `.env` as `DASHBOARD_AUTH`.
+- **Config is Dynamic**: `docker-compose.yml` reads `${VAR}` from `.env`. 
+- **`$$` Escaping**: Password hashes in `.env` must have all `$` doubled to `$$`.
+- **App Template**: Reusable template at `applications/blog-example/`.
