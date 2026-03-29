@@ -1,0 +1,35 @@
+# ============================================
+# PRIVATE BRANCH OVERRIDE
+# ============================================
+# This version is an override that allows .env files to be tracked.
+# Only use this on your private branch!
+# NEVER merge this version into `main`.
+
+# ── Override: track real .env files on this branch ───
+!.env
+!**/.env
+
+# ── SSH Keys (Still excluded for safety) ──────────────
+.ssh/
+**/*.pem
+**/*.key
+**/id_rsa
+**/id_ed25519
+**/id_ecdsa
+
+# ── Docker volumes / data ────────────────────
+**/volumes/
+**/data/
+
+# ── OS / Editor junk ─────────────────────────
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ── Logs ──────────────────────────────────────
+*.log
+logs/
