@@ -1,0 +1,49 @@
+services:
+  app:
+    image: ${WP_IMAGE}
+    container_name: ${WP_CONTAINER_NAME}
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: ${DB_USER}
+      WORDPRESS_DB_PASSWORD: ${DB_PASSWORD}
+      WORDPRESS_DB_NAME: ${DB_NAME}
+    volumes:
+      - wordpress_data:/var/www/html
+    networks:
+      - proxy
+      - internal
+    depends_on:
+      - db
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.${ROUTER_NAME}.rule=Host(`${APP_DOMAIN}`)"
+      - "traefik.http.routers.${ROUTER_NAME}.entrypoints=websecure"
+      - "traefik.http.routers.${ROUTER_NAME}.tls.certresolver=myresolver"
+      - "traefik.http.services.${ROUTER_NAME}.loadbalancer.server.port=${WP_PORT}"
+
+  db:
+    image: ${DB_IMAGE}
+    container_name: ${DB_CONTAINER_NAME}
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - internal
+
+volumes:
+  wordpress_data:
+    name: ${WP_CONTAINER_NAME}_data
+  db_data:
+    name: ${DB_CONTAINER_NAME}_data
+
+networks:
+  proxy:
+    external: true
+  internal:
+    name: ${INTERNAL_NETWORK_NAME}

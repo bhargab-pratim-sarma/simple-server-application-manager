@@ -1,0 +1,33 @@
+# ============================================
+# Generic App Template for Traefik
+# ============================================
+# This works with ANY Docker image.
+# Just update the .env file — no need to touch this file!
+# ============================================
+
+services:
+  app:
+    image: ${APP_IMAGE}
+    container_name: ${CONTAINER_NAME}
+    restart: always
+    networks:
+      - proxy
+    labels:
+      # 1. Enable Traefik discovery
+      - "traefik.enable=true"
+
+      # 2. Route: which domain goes to this container
+      - "traefik.http.routers.${ROUTER_NAME}.rule=Host(`${APP_DOMAIN}`)"
+
+      # 3. Only accept HTTPS traffic
+      - "traefik.http.routers.${ROUTER_NAME}.entrypoints=websecure"
+
+      # 4. Auto-generate SSL certificate
+      - "traefik.http.routers.${ROUTER_NAME}.tls.certresolver=myresolver"
+
+      # 5. Tell Traefik which port your app uses inside the container
+      - "traefik.http.services.${ROUTER_NAME}.loadbalancer.server.port=${APP_PORT}"
+
+networks:
+  proxy:
+    external: true

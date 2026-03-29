@@ -1,0 +1,37 @@
+# ============================================
+# Server Manager - .gitignore
+# ============================================
+
+# ── Environment files (SENSITIVE) ────────────
+# Ignore all .env files by default (public branch safety)
+.env
+**/.env
+
+# Always allow example env files
+!.env.example
+!**/.env.example
+
+# ── SSH Keys (NEVER commit these) ────────────
+.ssh/
+**/*.pem
+**/*.key
+**/id_rsa
+**/id_ed25519
+**/id_ecdsa
+
+# ── Docker volumes / data ────────────────────
+**/volumes/
+**/data/
+
+# ── OS / Editor junk ─────────────────────────
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ── Logs ──────────────────────────────────────
+*.log
+logs/
