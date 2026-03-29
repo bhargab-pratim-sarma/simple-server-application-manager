@@ -62,3 +62,16 @@ This repository uses a two-branch strategy to manage secrets:
 - **Config is Dynamic**: `docker-compose.yml` reads `${VAR}` from `.env`. 
 - **`$$` Escaping**: Password hashes in `.env` must have all `$` doubled to `$$`.
 - **App Template**: Reusable template at `applications/blog-example/`.
+
+## 7. Remote Branches (IMPORTANT)
+
+There is **only one branch** present on the GitHub remote: `main`. 
+- The `private` branch exists **only locally** on your machine.
+- This is intentional. Never push the `private` branch to a remote.
+
+## 8. Automated Secret Filtering
+
+To prevent accidental leaks, this repository uses a **pre-push Git hook** (`.git/hooks/pre-push`):
+- **Branch Lock**: Attempting to push the `private` branch to a remote will be blocked automatically.
+- **Content Scan**: Any commit containing `.env`, `.key`, `.pem`, or `id_rsa` will be blocked before it reaches GitHub.
+- **Manual Check**: Always run `git status` before pushing to ensure no untracked secrets are accidentally staged.
